@@ -1,8 +1,13 @@
 import axios from "axios";
 
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+// Use the API key directly with a fallback
+const API_KEY =
+  import.meta.env.VITE_TMDB_API_KEY || "5bc3cd1a115010448834fe025dd77a48";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
+
+// Log the API key (remove in production)
+console.log("API Key being used:", API_KEY ? "Key exists" : "Key is missing");
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -10,11 +15,23 @@ const api = axios.create({
     api_key: API_KEY,
     language: "en-US",
   },
-  timeout: 10000, // 10 second timeout
+  timeout: 15000, // 15 second timeout
   headers: {
     "Content-Type": "application/json",
+    Accept: "application/json",
   },
 });
+
+// Add request interceptor to log requests (for debugging)
+api.interceptors.request.use(
+  (config) => {
+    console.log(`Making request to: ${config.baseURL}${config.url}`);
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // Add response interceptor for error handling
 api.interceptors.response.use(
@@ -23,6 +40,7 @@ api.interceptors.response.use(
     if (error.response) {
       // Server responded with error status
       console.error("API Error:", error.response.data);
+      console.error("Status Code:", error.response.status);
     } else if (error.request) {
       // Request made but no response
       console.error("Network Error:", error.message);

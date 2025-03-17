@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
+import ApiTest from "./components/ApiTest";
 
 // Import pages
 import Home from "./pages/Home";
@@ -62,6 +63,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/api-test" element={<ApiTest />} />
                 <Route path="/:mediaType/:id" element={<Details />} />
               </Routes>
             </main>

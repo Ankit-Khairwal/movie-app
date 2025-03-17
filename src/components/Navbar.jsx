@@ -119,6 +119,7 @@ const Navbar = () => {
     { text: "Movies", icon: <Movie />, path: "/movies" },
     { text: "TV Shows", icon: <Tv />, path: "/tv" },
     { text: "Trending", icon: <Whatshot />, path: "/trending" },
+    { text: "API Test", icon: <SearchIcon />, path: "/api-test" },
   ];
 
   const drawer = (
